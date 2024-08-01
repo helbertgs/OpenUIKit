@@ -1,7 +1,7 @@
 import Foundation
 
 /// An object that represents one instance of your app’s user interface.
-@MainActor public class UIScene : @preconcurrency Equatable, @preconcurrency Hashable {
+@MainActor public class UIScene : Equatable, Hashable {
 
     // MARK: - Managing the life cycle of a scene
 

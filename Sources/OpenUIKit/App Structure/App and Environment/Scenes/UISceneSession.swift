@@ -2,7 +2,7 @@ import Foundation
 
 /// An object that contains information about one of your app’s scenes.
 @MainActor
-public class UISceneSession : @preconcurrency Equatable, @preconcurrency Hashable, Sendable {
+public class UISceneSession : Equatable, Hashable, Sendable {
 
     // MARK: - Getting the scene information
 

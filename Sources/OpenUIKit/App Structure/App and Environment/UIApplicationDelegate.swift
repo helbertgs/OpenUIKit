@@ -75,7 +75,7 @@ import Foundation
     ///
     /// UIApplicationDelegate provides an implementation of the main() method so that it can serve as the main entry point for a UIKit app.
     /// The system calls the main() method to launch your app; you never call it yourself. You can have exactly one entry point in your app, which you mark with the @main attribute.
-    @MainActor @preconcurrency static func main()
+    @MainActor static func main()
 
     // MARK: - Create an App delegate
 

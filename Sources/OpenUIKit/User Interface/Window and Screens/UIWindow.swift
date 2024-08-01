@@ -1,13 +1,13 @@
 import Foundation
-import CGLFW3
-import OpenGL
+import CoreGraphics
+import GLAD
 
 /// The backdrop for your app’s user interface and the object that dispatches events to your views.
-@MainActor public class UIWindow {
+@MainActor public class UIWindow : UIView {
 
     // MARK: - Internal Property(ies)
 
-    private var _window: OpaquePointer?
+    internal var glfwWindow: OpaquePointer?
 
     // MARK: - Getting related objects
 
@@ -25,8 +25,15 @@ import OpenGL
     /// - Parameter windowScene: The scene object in which to display the window.
     public init(windowScene: UIWindowScene) {
         self.windowScene = windowScene
-        self._window = glfwCreateWindow(900, 450, "Window", nil, nil)
-        glViewport(0, 0, 900, 450)
+        self.glfwWindow = glfwCreateWindow(900, 450, "Window", nil, nil)
+
+        super.init(frame: .zero)
+
+        if let window = glfwWindow {
+            glfwSetWindowPosCallback(window, { win, x, y in
+                self.frame.origin = Point(x: Double(x), y: Double(y))
+            })
+        }
     }
 
     // MARK: - Making windows key
@@ -39,23 +46,25 @@ import OpenGL
         print("\(Self.self).\(#function)")
         windowScene?.keyWindow = self
 
-        if let window = _window {
+        if let window = glfwWindow {
             glfwMakeContextCurrent(window)
         }
     }
 
     public func draw() {
         print("\(Self.self).\(#function)")
-        if let window = _window {
-            glClearColor(0.2, 0.3, 0.3, 1)
-            glClear(UInt32(GL_COLOR_BUFFER_BIT))
+        if let window = glfwWindow {
+            let color = backgroundColor ?? UIColor.black
+
+            glad_glClearColor(color.red, color.green, color.blue, color.alpha)
+            glad_glClear(UInt32(GL_COLOR_BUFFER_BIT))
             glfwSwapBuffers(window)
         }
     }
 
     public func close() {
         print("\(Self.self).\(#function)")
-        if let window = self._window {
+        if let window = self.glfwWindow {
             glfwSetWindowShouldClose(window, GL_TRUE)
         }
     }

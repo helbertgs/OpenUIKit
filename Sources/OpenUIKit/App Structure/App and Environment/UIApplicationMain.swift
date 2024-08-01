@@ -1,5 +1,6 @@
 import Foundation
-import CGLFW3
+import CoreGraphics
+import GLAD
 
 /// Creates the application object and the application delegate and sets up the event cycle.
 /// - Parameters:
@@ -138,11 +139,19 @@ public func UIApplicationMain(
     scene.delegate?.scene(scene, willConnectTo: session, options: .init())
     session.scene = scene
 
+    if gladLoaderLoadGL() == GL_FALSE {
+        print("GLAD no initialized")
+    }
+
     mainLoop: while true {
         UIApplication.shared.connectedScenes.forEach {
             if let scene = $0 as? UIWindowScene? {
                 scene?.keyWindow?.draw()
             }
+        }
+
+        if UIApplication.shared.connectedScenes.isEmpty {
+            break mainLoop
         }
 
         glfwPollEvents()

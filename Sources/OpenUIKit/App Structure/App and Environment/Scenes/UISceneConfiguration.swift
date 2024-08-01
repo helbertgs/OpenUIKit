@@ -2,7 +2,7 @@ import Foundation
 
 /// Information about the objects and storyboard for UKit to use when creating a particular scene.
 @MainActor
-public class UISceneConfiguration : @preconcurrency Decodable {
+public class UISceneConfiguration : Decodable {
 
     // MARK: - Specifying the scene creation details
 
@@ -29,7 +29,7 @@ public class UISceneConfiguration : @preconcurrency Decodable {
         self.role = role
     }
 
-    required public init(from decoder: Decoder) throws {
+    nonisolated required public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.name = try container.decodeIfPresent(String.self, forKey: .name)
         self.role = try container.decode(UISceneSession.Role.self, forKey: .role)

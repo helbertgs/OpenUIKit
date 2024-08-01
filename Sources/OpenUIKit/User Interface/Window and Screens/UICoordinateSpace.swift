@@ -1,4 +1,4 @@
-import OpenCoreGraphics
+import Foundation
 
 /// A set of methods for converting between different frames of reference on a screen.
 @MainActor public protocol UICoordinateSpace {
